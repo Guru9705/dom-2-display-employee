@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+  </head>
+  <style>
+    #sales-1,
+    #sales-2,
+    #name {
+      width: 200px;
+      height: 20px;
+    }
+    #selectTag {
+      width: 150px;
+      height: 26px;
+    }
+    #submit {
+      width: 100px;
+      height: 26px;
+      font-size: 17px;
+      background-color: greenyellow;
+    }
+    table {
+      margin: auto;
+      margin-top: 100px;
+    }
+    td {
+      font-size: 20px;
+      border: 1px solid;
+      width: 30%;
+      font-weight: bold;
+    }
+    #asc,
+    #desc {
+      margin: auto;
+    }
+  </style>
+  <body>
+    <form>
+      <input id="name" placeholder="Enter name" type="text" />
+      <select id="selectTag">
+        <option value="select">Select</option>
+        <option value="HR">HR</option>
+        <option value="Admin">Admin</option>
+      </select>
+      <input type="text" id="sales-1" placeholder="sales year-1" />
+      <input type="text" id="sales-2" placeholder="sales year-2" />
+      <input id="submit" type="submit" value="submit" />
+    </form>
+    <table id="table">
+      <tr>
+        <td>Emp Name</td>
+        <td>Department</td>
+        <td>Avg sales</td>
+      </tr>
+    </table>
+    <div style="display: flex; justify-content: space-between; width: 10%">
+      <div>
+        <button id="asc" style="background-color: cadetblue">Ascending</button>
+      </div>
+      <div>
+        <button id="desc" style="background-color: coral">Descending</button>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  document.querySelector("form").addEventListener("submit", add_func);
+  var arr = [];
+  function add_func(event) {
+    event.preventDefault();
+    var name = document.getElementById("name").value;
+    var opt = document.getElementById("selectTag").value;
+    var s1 = document.getElementById("sales-1").value;
+    var s2 = document.getElementById("sales-2").value;
+    var a1 = parseInt(s1);
+    var a2 = parseInt(s2);
+    //console.log("avg",s1,s2);
+    var avg = (a1 + a2) / 2;
+    var obj = [name, opt, avg];
+    arr.push(obj);
+    var tr = document.createElement("tr");
+    var td1 = document.createElement("td");
+    td1.textContent = name;
+    var td2 = document.createElement("td");
+    td2.textContent = opt;
+    var td3 = document.createElement("td");
+    td3.textContent = avg;
+    tr.append(td1, td2, td3);
+    document.querySelector("table").append(tr);
+  }
+  document.querySelector("#asc").addEventListener("click", asc_func);
+
+  function asc_func() {
+    console.log(arr);
+    var tableHeaderRowCount = 1;
+    var table = document.getElementById("table");
+    var rowCount = table.rows.length;
+    for (var i = tableHeaderRowCount; i < rowCount; i++) {
+      table.deleteRow(tableHeaderRowCount);
+    }
+    arr.sort(function (a, b) {
+      return a[2] - b[2];
+    });
+    for (var i = 0; i < arr.length; i++) {
+      var tr = document.createElement("tr");
+      var td1 = document.createElement("td");
+      td1.textContent = arr[i][0];
+      var td2 = document.createElement("td");
+      td2.textContent = arr[i][1];
+      var td3 = document.createElement("td");
+      td3.textContent = arr[i][2];
+      tr.append(td1, td2, td3);
+      document.querySelector("table").append(tr);
+    }
+  }
+
+  document.querySelector("#desc").addEventListener("click", desc_func);
+
+  function desc_func() {
+    console.log(arr);
+    var tableHeaderRowCount = 1;
+    var table = document.getElementById("table");
+    var rowCount = table.rows.length;
+    for (var i = tableHeaderRowCount; i < rowCount; i++) {
+      table.deleteRow(tableHeaderRowCount);
+    }
+    arr.sort(function (a, b) {
+      return b[2] - a[2];
+    });
+    for (var i = 0; i < arr.length; i++) {
+      var tr = document.createElement("tr");
+      var td1 = document.createElement("td");
+      td1.textContent = arr[i][0];
+      var td2 = document.createElement("td");
+      td2.textContent = arr[i][1];
+      var td3 = document.createElement("td");
+      td3.textContent = arr[i][2];
+      tr.append(td1, td2, td3);
+      document.querySelector("table").append(tr);
+    }
+  }
+</script>
